@@ -87,7 +87,10 @@ public class MembershipChangeObserver implements Observer {
 			if (event.getEvent().equals(MEMBERSHIP_EVENT) || event.getEvent().equals(SITE_UPDATE_EVENT)) {
 				Site site = null;
 				try {
-					site = siteService.getSite(event.getContext());
+					String siteId = event.getContext();
+					if (siteId != null) {
+						site = siteService.getSite(siteId);
+					}
 				} catch (IdUnusedException e) {
 					log.error("Error observing Turnitin Membership update because we couldn't look up site: " + event.getContext(), e);
 				}
